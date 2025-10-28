@@ -1,7 +1,13 @@
 from sqlalchemy import Column, DateTime, Integer, Float, String, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship 
-from datetime import datetime
+from datetime import datetime, timedelta, timezone
+
+import jwt
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+from jwt.exceptions import InvalidTokenError
+from pwdlib import PasswordHash
 
 
 Base=declarative_base()
