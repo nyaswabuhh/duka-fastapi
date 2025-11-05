@@ -5,7 +5,7 @@ from fastapi import Depends, HTTPException,status, Security
 from typing import Annotated
 import jwt
 
-from models import User
+from app.models import User
 
 # oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login", scheme_name="Bearer")
 security=HTTPBearer()

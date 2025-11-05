@@ -1,12 +1,13 @@
 
 from typing import Annotated
 from fastapi import FastAPI, Depends, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-import models
-from database import session, engine
+import app.models as models
+from app.database import session, engine
 from sqlalchemy.orm import Session
 from datetime import datetime
-from jwt_service import create_access_token, get_current_active_user
+from app.jwt_service import create_access_token, get_current_active_user
 from fastapi import Depends, FastAPI, HTTPException, status
 from pwdlib import PasswordHash
 
@@ -18,6 +19,14 @@ def verify_password(plain_password, hashed_password):
 #Sentry/Slack/SQLAlchemy/Unit Tests /Gitflow Workflow/Jira/CI/CD, Docker
 
 app=FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:5500", "http://127.0.0.1:5500"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 models.Base.metadata.create_all(bind=engine)
 
